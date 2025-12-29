@@ -224,11 +224,11 @@
                     <div class="row justify-content-center align-items-center">
 
                         <div class="col-lg-5 col-12 ms-auto">
-                            <h2 class="mb-0">Make an impact. <br> Save lives.</h2>
+                            <h2 class="mb-0"><?php echo get_theme_mod('impact_msg'); ?></h2>
                         </div>
 
                         <div class="col-lg-5 col-12">
-                            <a href="#" class="me-4">Make a donation</a>
+                            <a href="<?php echo get_theme_mod('impact_link_action'); ?>" class="me-4"><?php echo get_theme_mod('impact_link_text'); ?></a>
 
                             <a href="#section_4" class="custom-btn btn smoothscroll">Become a volunteer</a>
                         </div>

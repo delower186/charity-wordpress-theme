@@ -302,3 +302,51 @@ function charity_founder_register( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'charity_founder_register' );
+/**
+ * Summary of charity_impact_register
+ * @param mixed $wp_customize
+ * @return void
+ */
+function charity_impact_register( $wp_customize ) {
+    // Add a section
+    $wp_customize->add_section( 'charity_impact_section', array(
+        'title'    => __( 'Impact Section', 'charity' ),
+        'priority' => 31,
+    ) );
+
+    /**
+     * Impact fields generator
+     */
+
+     $fields = ['impact_msg','impact_link_text','impact_link_action'];
+
+     foreach($fields as $field){
+
+        // Default type
+        $type = 'text';
+        $sanitize = 'sanitize_text_field';
+
+        switch ( $field ) {
+
+            case 'impact_msg':
+                $type = 'textarea';
+                $sanitize = 'wp_kses_post'; // ✅ allow HTML
+                break;
+
+        }  
+
+        $wp_customize->add_setting( $field, array(
+            'default' => '',
+            'sanitize_callback' => $sanitize,
+        ) );
+        
+        $wp_customize->add_control( $field.'_control', array(
+        'label' => ucwords( str_replace('_', ' ', $field) ),
+        'section' => 'charity_impact_section', // Or create a new section
+        'settings' => $field,
+        'type' => $type,
+        ) );
+    }
+
+}
+add_action( 'customize_register', 'charity_impact_register' );
