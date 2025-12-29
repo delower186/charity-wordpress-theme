@@ -9,15 +9,15 @@
                             <div id="hero-slide" class="carousel carousel-fade slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <?php
-                                        $client_args = [
+                                        $slider_args = [
                                         'post_type' => 'slider', 
                                         'posts_per_page' => -1
                                         ];
-                                        $client_query = new WP_Query($client_args);
+                                        $slider_query = new WP_Query($slider_args);
 
-                                        if ($client_query->have_posts()):
+                                        if ($slider_query->have_posts()):
 
-                                        while ($client_query->have_posts()): $client_query->the_post();
+                                        while ($slider_query->have_posts()): $slider_query->the_post();
                                     ?>
                                     <div class="carousel-item active">
                                         <img src="<?php echo get_the_post_thumbnail_url(); ?>" class="carousel-image img-fluid" alt="...">
@@ -246,61 +246,72 @@
                             <h2>Our Causes</h2>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                            <div class="custom-block-wrap">
-                                <img src="images/causes/group-african-kids-paying-attention-class.jpg" class="custom-block-image img-fluid" alt="">
+                        <?php
+                            $causes_args = [
+                            'post_type' => 'causes', 
+                            'posts_per_page' => -1
+                            ];
+                            $causes_query = new WP_Query($causes_args);
 
-                                <div class="custom-block">
-                                    <div class="custom-block-body">
-                                        <h5 class="mb-3">Children Education</h5>
+                            if ($causes_query->have_posts()):
 
-                                        <p>Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito</p>
-
-                                        <div class="progress mt-4">
-                                            <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-
-                                        <div class="d-flex align-items-center my-2">
-                                            <p class="mb-0">
-                                                <strong>Raised:</strong>
-                                                $18,500
-                                            </p>
-
-                                            <p class="ms-auto mb-0">
-                                                <strong>Goal:</strong>
-                                                $32,000
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <a href="donate.html" class="custom-btn btn">Donate now</a>
-                                </div>
-                            </div>
-                        </div>
+                            while ($causes_query->have_posts()): $causes_query->the_post();
+                        ?>
 
                         <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
                             <div class="custom-block-wrap">
-                                <img src="images/causes/poor-child-landfill-looks-forward-with-hope.jpg" class="custom-block-image img-fluid" alt="">
+                                <img src="<?php echo get_the_post_thumbnail_url(); ?>" class="custom-block-image img-fluid" alt="">
 
                                 <div class="custom-block">
                                     <div class="custom-block-body">
-                                        <h5 class="mb-3">Poverty Development</h5>
+                                        <h5 class="mb-3"><?php echo get_the_title(); ?></h5>
 
-                                        <p>Sed leo nisl, posuere at molestie ac, suscipit auctor mauris. Etiam quis metus tempor</p>
+                                        <p><?php echo get_the_content(); ?></p>
 
+                                        <?php
+                                            $donation_raised = get_post_meta(get_the_ID(), '_donation_raised', true);
+                                            $donation_goal = get_post_meta(get_the_ID(), '_donation_goal', true);
+
+                                            $raised = (float) $donation_raised;
+                                            $goal = (float) $donation_goal;
+
+                                            $percentage = 0;
+
+                                            if ($goal > 0) {
+                                                $percentage = ($raised / $goal) * 100;
+                                            }
+
+                                            // Optional: limit to 100%
+                                            $percentage = min(100, $percentage);
+
+                                            // Optional: round
+                                            $percentage = round($percentage, 2);
+                                        ?>
                                         <div class="progress mt-4">
-                                            <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar w-75" role="progressbar" aria-valuenow="<?php echo esc_attr($percentage); ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
 
                                         <div class="d-flex align-items-center my-2">
                                             <p class="mb-0">
                                                 <strong>Raised:</strong>
-                                                $27,600
+                                                <?php
+                                                    if($donation_raised){
+                                                        echo '$'. $donation_raised;
+                                                    }else{
+                                                        echo '$'. 0;
+                                                    }
+                                                ?>
                                             </p>
 
                                             <p class="ms-auto mb-0">
                                                 <strong>Goal:</strong>
-                                                $60,000
+                                                <?php
+                                                    if($donation_goal){
+                                                        echo '$'. $donation_goal;
+                                                    }else{
+                                                        echo '$'. 0;
+                                                    }
+                                                ?>
                                             </p>
                                         </div>
                                     </div>
@@ -310,37 +321,11 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <div class="custom-block-wrap">
-                                <img src="images/causes/african-woman-pouring-water-recipient-outdoors.jpg" class="custom-block-image img-fluid" alt="">
-
-                                <div class="custom-block">
-                                    <div class="custom-block-body">
-                                        <h5 class="mb-3">Supply drinking water</h5>
-
-                                        <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus</p>
-
-                                        <div class="progress mt-4">
-                                            <div class="progress-bar w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-
-                                        <div class="d-flex align-items-center my-2">
-                                            <p class="mb-0">
-                                                <strong>Raised:</strong>
-                                                $84,600
-                                            </p>
-
-                                            <p class="ms-auto mb-0">
-                                                <strong>Goal:</strong>
-                                                $100,000
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <a href="donate.html" class="custom-btn btn">Donate now</a>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                            endwhile;
+                            wp_reset_postdata();
+                        endif;
+                        ?>
 
                     </div>
                 </div>
