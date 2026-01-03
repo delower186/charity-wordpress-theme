@@ -7,3 +7,17 @@ Version: 1.0
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
+
+.custom-form .wpcf7-submit {
+    background-color: #597081; /* your color */
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.custom-form .wpcf7-submit:hover {
+    background-color: #5BC1AC;
+}
