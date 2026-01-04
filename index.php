@@ -368,111 +368,78 @@
                         </div>
 
                         <div class="col-lg-7 col-12">
-                            <div class="news-block">
-                                <div class="news-block-top">
-                                    <a href="news-detail.html">
-                                        <img src="images/news/medium-shot-volunteers-with-clothing-donations.jpg" class="news-image img-fluid" alt="">
-                                    </a>
+                            <?php 
+                                $blog_posts = new WP_Query(array(
+                                    'post_type'      => 'post',
+                                    'posts_per_page' => 2
+                                ));
 
-                                    <div class="news-category-block">
-                                        <a href="#" class="category-block-link">
-                                            Lifestyle,
-                                        </a>
+                                if ( $blog_posts->have_posts() ) :
+                                    /* Start the Loop */
+                                    while ( $blog_posts->have_posts() ) :
+                                        $blog_posts->the_post();
 
-                                        <a href="#" class="category-block-link">
-                                            Clothing Donation
-                                        </a>
-                                    </div>
-                                </div>
+                                        $categories = get_the_category();
 
-                                <div class="news-block-info">
-                                    <div class="d-flex mt-2">
-                                        <div class="news-block-date">
-                                            <p>
-                                                <i class="bi-calendar4 custom-icon me-1"></i>
-                                                October 12, 2036
-                                            </p>
-                                        </div>
+                                        $show_post_categories = '';
 
-                                        <div class="news-block-author mx-5">
-                                            <p>
-                                                <i class="bi-person custom-icon me-1"></i>
-                                                By Admin
-                                            </p>
-                                        </div>
+                                        if ( ! empty( $categories ) ) {
+                                            foreach ( $categories as $cat ) {
+                                                $show_post_categories .= '<a href="' . esc_url( get_category_link( $cat->term_id ) ) . '" class="category-block-link">'
+                                                    . esc_html( $cat->name ) .
+                                                    '</a> ';
+                                            }
+                                        }
 
-                                        <div class="news-block-comment">
-                                            <p>
-                                                <i class="bi-chat-left custom-icon me-1"></i>
-                                                32 Comments
-                                            </p>
-                                        </div>
-                                    </div>
+                                        echo '<div class="news-block">
+                                                    <div class="news-block-top">
+                                                        <a href="'.esc_url( get_permalink()).'">
+                                                            <img src="'.get_the_post_thumbnail_url().'" class="news-image img-fluid" alt="">
+                                                        </a>
 
-                                    <div class="news-block-title mb-2">
-                                        <h4><a href="news-detail.html" class="news-block-title-link">Clothing donation to urban area</a></h4>
-                                    </div>
+                                                        <div class="news-category-block">
+                                                            '.$show_post_categories.'
+                                                        </div>
+                                                    </div>
 
-                                    <div class="news-block-body">
-                                        <p>Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito</p>
-                                    </div>
-                                </div>
-                            </div>
+                                                    <div class="news-block-info">
+                                                        <div class="d-flex mt-2">
+                                                            <div class="news-block-date">
+                                                                <p>
+                                                                    <i class="bi-calendar4 custom-icon me-1"></i>
+                                                                    '.get_the_date('M j, Y').'
+                                                                </p>
+                                                            </div>
 
-                            <div class="news-block mt-3">
-                                <div class="news-block-top">
-                                    <a href="news-detail.html">
-                                        <img src="images/news/medium-shot-people-collecting-foodstuff.jpg" class="news-image img-fluid" alt="">
-                                    </a>
+                                                            <div class="news-block-author mx-5">
+                                                                <p>
+                                                                    <i class="bi-person custom-icon me-1"></i>
+                                                                    By '.esc_html( get_the_author_meta( 'display_name' ) ).'
+                                                                </p>
+                                                            </div>
 
-                                    <div class="news-category-block">
-                                        <a href="#" class="category-block-link">
-                                            Food,
-                                        </a>
+                                                            <div class="news-block-comment">
+                                                                <p>
+                                                                    <i class="bi-chat-left custom-icon me-1"></i>
+                                                                    '.get_comments_number().' Comments
+                                                                </p>
+                                                            </div>
+                                                        </div>
 
-                                        <a href="#" class="category-block-link">
-                                            Donation,
-                                        </a>
+                                                        <div class="news-block-title mb-2">
+                                                            <h4><a href="'.esc_url( get_permalink()).'" class="news-block-title-link">'.get_the_title().'</a></h4>
+                                                        </div>
 
-                                        <a href="#" class="category-block-link">
-                                            Caring
-                                        </a>
-                                    </div>
-                                </div>
+                                                        <div class="news-block-body">
+                                                            <p>'.charity_excerpt_limit(200, get_the_excerpt()).'</p>
+                                                        </div>
+                                                    </div>
+                                                </div>';
 
-                                <div class="news-block-info">
-                                    <div class="d-flex mt-2">
-                                        <div class="news-block-date">
-                                            <p>
-                                                <i class="bi-calendar4 custom-icon me-1"></i>
-                                                October 20, 2036
-                                            </p>
-                                        </div>
-
-                                        <div class="news-block-author mx-5">
-                                            <p>
-                                                <i class="bi-person custom-icon me-1"></i>
-                                                By Admin
-                                            </p>
-                                        </div>
-
-                                        <div class="news-block-comment">
-                                            <p>
-                                                <i class="bi-chat-left custom-icon me-1"></i>
-                                                35 Comments
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="news-block-title mb-2">
-                                        <h4><a href="news-detail.html" class="news-block-title-link">Food donation area</a></h4>
-                                    </div>
-
-                                    <div class="news-block-body">
-                                        <p>Sed leo nisl, posuere at molestie ac, suscipit auctor mauris. Etiam quis metus elementum, tempor risus vel, condimentum orci</p>
-                                    </div>
-                                </div>
-                            </div>
+                                    endwhile;
+                                    wp_reset_postdata();
+                                endif;
+                            ?>
                         </div>
 
                         <div class="col-lg-4 col-12 mx-auto">
@@ -485,108 +452,75 @@
                             </form>
 
                             <h5 class="mt-5 mb-3">Recent news</h5>
+                            <?php 
+                                $args = [
+                                    'post_type'      => 'post',
+                                    'posts_per_page' => 2, // get 3rd & 4th posts
+                                    'offset'         => 2, // skip 1st and 2nd latest posts
+                                    'orderby'        => 'date',
+                                    'order'          => 'DESC',
+                                ];
 
-                            <div class="news-block news-block-two-col d-flex mt-4">
-                                <div class="news-block-two-col-image-wrap">
-                                    <a href="news-detail.html">
-                                        <img src="images/news/africa-humanitarian-aid-doctor.jpg" class="news-image img-fluid" alt="">
-                                    </a>
-                                </div>
+                                $query = new WP_Query( $args );
 
-                                <div class="news-block-two-col-info">
-                                    <div class="news-block-title mb-2">
-                                        <h6><a href="news-detail.html" class="news-block-title-link">Food donation area</a></h6>
-                                    </div>
+                                if ( $query->have_posts() ) :
+                                    while ( $query->have_posts() ) : $query->the_post();
+                                        echo '<div class="news-block news-block-two-col d-flex mt-4">
+                                                <div class="news-block-two-col-image-wrap">
+                                                    <a href="'.esc_url( get_permalink()).'">
+                                                        <img src="'.get_the_post_thumbnail_url().'" class="news-image img-fluid" alt="">
+                                                    </a>
+                                                </div>
 
-                                    <div class="news-block-date">
-                                        <p>
-                                            <i class="bi-calendar4 custom-icon me-1"></i>
-                                            October 16, 2036
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                                                <div class="news-block-two-col-info">
+                                                    <div class="news-block-title mb-2">
+                                                        <h6><a href="'.esc_url( get_permalink()).'" class="news-block-title-link">'.charity_excerpt_limit(20, get_the_title()).'</a></h6>
+                                                    </div>
 
-                            <div class="news-block news-block-two-col d-flex mt-4">
-                                <div class="news-block-two-col-image-wrap">
-                                    <a href="news-detail.html">
-                                        <img src="images/news/close-up-happy-people-working-together.jpg" class="news-image img-fluid" alt="">
-                                    </a>
-                                </div>
-
-                                <div class="news-block-two-col-info">
-                                    <div class="news-block-title mb-2">
-                                        <h6><a href="news-detail.html" class="news-block-title-link">Volunteering Clean</a></h6>
-                                    </div>
-
-                                    <div class="news-block-date">
-                                        <p>
-                                            <i class="bi-calendar4 custom-icon me-1"></i>
-                                            October 24, 2036
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                                                    <div class="news-block-date">
+                                                        <p>
+                                                            <i class="bi-calendar4 custom-icon me-1"></i>
+                                                            '.get_the_date('M j, Y').'
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>';
+                                    endwhile;
+                                    wp_reset_postdata();
+                                endif;
+                            ?>
 
                             <div class="category-block d-flex flex-column">
                                 <h5 class="mb-3">Categories</h5>
 
-                                <a href="#" class="category-block-link">
-                                    Drinking water
-                                    <span class="badge">20</span>
-                                </a>
+                                <?php 
+                                    $categories = get_categories([
+                                        'hide_empty' => false,
+                                    ]);
 
-                                <a href="#" class="category-block-link">
-                                    Food Donation
-                                    <span class="badge">30</span>
-                                </a>
+                                    foreach ( $categories as $category ) {
+                                        echo '<a href="'.esc_url( get_category_link( $category->term_id ) ).'" class="category-block-link">
+                                                '.esc_html( $category->name ).'
+                                                <span class="badge">'.intval( $category->count ).'</span>
+                                            </a>';
+                                    }
+                                ?>
 
-                                <a href="#" class="category-block-link">
-                                    Children Education
-                                    <span class="badge">10</span>
-                                </a>
-
-                                <a href="#" class="category-block-link">
-                                    Poverty Development
-                                    <span class="badge">15</span>
-                                </a>
-
-                                <a href="#" class="category-block-link">
-                                    Clothing Donation
-                                    <span class="badge">20</span>
-                                </a>
                             </div>
 
                             <div class="tags-block">
                                 <h5 class="mb-3">Tags</h5>
+                                <?php 
+                                    $tags = get_tags([
+                                        'hide_empty' => true,
+                                    ]);
 
-                                <a href="#" class="tags-block-link">
-                                    Donation
-                                </a>
-
-                                <a href="#" class="tags-block-link">
-                                    Clothing
-                                </a>
-
-                                <a href="#" class="tags-block-link">
-                                    Food
-                                </a>
-
-                                <a href="#" class="tags-block-link">
-                                    Children
-                                </a>
-
-                                <a href="#" class="tags-block-link">
-                                    Education
-                                </a>
-
-                                <a href="#" class="tags-block-link">
-                                    Poverty
-                                </a>
-
-                                <a href="#" class="tags-block-link">
-                                    Clean Water
-                                </a>
+                                    foreach ( $tags as $tag ) {
+                                        echo '<a href="' . esc_url( get_tag_link( $tag->term_id ) ) . '" class="tags-block-link">
+                                                '.esc_html( $tag->name ).'
+                                            </a>';
+                                    }
+                                ?>
                             </div>
 
                             <form class="custom-form subscribe-form" action="#" method="get" role="form">

@@ -9,6 +9,7 @@ require_once(get_template_directory() . "/inc/Bootstrap_5_WP_Nav_Menu_Walker.php
 require_once(get_template_directory() . "/inc/custom_post_types.php");
 require_once(get_template_directory() . "/inc/custom_meta_boxes.php");
 require_once(get_template_directory() . "/inc/forms.php");
+require_once(get_template_directory() . "/inc/utilities.php");
 
 function charity_theme_support(){
     // adds dynamic title tag support
