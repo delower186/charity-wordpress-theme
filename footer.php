@@ -2,10 +2,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-12 mb-4">
-                        <!-- <img src="images/logo.png" class="logo img-fluid" alt=""> -->
-                        <span class="text-white">
-                            ASCOA
-                        </span>
+                        <?php
+                            $custom_logo_id = get_theme_mod( 'custom_logo' );
+
+                            if ( $custom_logo_id ) {
+                                $logo = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+                                $logo_url = $logo[0];
+                            }
+                        ?>
+                        <img src="<?php echo esc_url( $logo_url ); ?>" class="logo img-fluid" alt="ASCOA">
                     </div>
 
                     <div class="col-lg-4 col-md-6 col-12 mb-4">
