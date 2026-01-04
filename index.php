@@ -549,55 +549,79 @@
                                 <div id="testimonial-carousel" class="carousel carousel-fade slide" data-bs-ride="carousel">
 
                                     <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                           <div class="carousel-caption">
-                                                <h4 class="carousel-title">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito</h4>
 
-                                                <small class="carousel-name"><span class="carousel-name-title">Maria</span>, Boss</small>
-                                           </div>
-                                        </div>
+                                        <?php 
+                                            $testimonials_args = [
+                                            'post_type' => 'testimonials', 
+                                            'posts_per_page' => -1
+                                            ];
+                                            $testimonials_query = new WP_Query($testimonials_args);
 
-                                        <div class="carousel-item">
-                                            <div class="carousel-caption">
-                                                <h4 class="carousel-title">Sed leo nisl, posuere at molestie ac, suscipit auctor mauris quis metus tempor orci</h4>
+                                            if ($testimonials_query->have_posts()):
 
-                                                <small class="carousel-name"><span class="carousel-name-title">Thomas</span>, Partner</small>
-                                            </div>
-                                        </div>
+                                                while ($testimonials_query->have_posts()): $testimonials_query->the_post();
 
-                                        <div class="carousel-item">
-                                            <div class="carousel-caption">
-                                                <h4 class="carousel-title">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito</h4>
+                                                    $full_content = get_the_content();
 
-                                                <small class="carousel-name"><span class="carousel-name-title">Jane</span>, Advisor</small>
-                                            </div>
-                                        </div>
+                                                    // Remove Gutenberg comments like <!-- wp:paragraph --> etc.
+                                                    $clean_content = preg_replace( '/<!--.*?-->/', '', $full_content );
 
-                                        <div class="carousel-item">
-                                            <div class="carousel-caption">
-                                                <h4 class="carousel-title">Sed leo nisl, posuere at molestie ac, suscipit auctor mauris quis metus tempor orci</h4>
+                                                    // Strip remaining HTML tags
+                                                    $clean_content = wp_strip_all_tags( $clean_content );
 
-                                                <small class="carousel-name"><span class="carousel-name-title">Bob</span>, Entreprenuer</small>
-                                           </div>
-                                        </div>
+                                                    // Trim spaces
+                                                    $clean_content = trim( $clean_content );
+                                                    
+                                                    $parts = explode(' ', trim($clean_content));
+
+                                                    $first_name = array_shift($parts);      // first word
+                                                    $rest_name  = implode(' ', $parts);     // remaining words
+
+                                                    if ($testimonials_query->current_post === 0){
+                                                        echo '<div class="carousel-item active">
+                                                                <div class="carousel-caption">
+                                                                    <h4 class="carousel-title">'.get_the_title().'</h4>
+
+                                                                    <small class="carousel-name"><span class="carousel-name-title">' . esc_html($first_name) . '</span>, '.esc_html($rest_name).'</small>
+                                                                </div>
+                                                            </div>';
+                                                    }else{
+                                                        echo '<div class="carousel-item">
+                                                                <div class="carousel-caption">
+                                                                    <h4 class="carousel-title">'.get_the_title().'</h4>
+
+                                                                    <small class="carousel-name"><span class="carousel-name-title">' . esc_html($first_name) . '</span>, '.esc_html($rest_name).'</small>
+                                                                </div>
+                                                            </div>';
+                                                    }
+                                                endwhile;
+                                                wp_reset_postdata();
+                                            endif;
+                                        ?>
 
                                           <ol class="carousel-indicators">
-                                               <li data-bs-target="#testimonial-carousel" data-bs-slide-to="0" class="active">
-                                                    <img src="images/avatar/portrait-beautiful-young-woman-standing-grey-wall.jpg" class="img-fluid rounded-circle avatar-image" alt="avatar">
-                                               </li>
+                                                <?php 
+                                                    if ($testimonials_query->have_posts()):
 
-                                               <li data-bs-target="#testimonial-carousel" data-bs-slide-to="1" class="">
-                                                    <img src="images/avatar/portrait-young-redhead-bearded-male.jpg" class="img-fluid rounded-circle avatar-image" alt="avatar">
-                                               </li>
+                                                        $counter = 0;
 
-                                               <li data-bs-target="#testimonial-carousel" data-bs-slide-to="2" class="">
-                                                    <img src="images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg" class="img-fluid rounded-circle avatar-image" alt="avatar">
-                                               </li>
+                                                        while ($testimonials_query->have_posts()): $testimonials_query->the_post();
 
-                                               <li data-bs-target="#testimonial-carousel" data-bs-slide-to="3" class="">
-                                                    <img src="images/avatar/studio-portrait-emotional-happy-funny.jpg" class="img-fluid rounded-circle avatar-image" alt="avatar">
-                                               </li>
-                                          </ol>
+                                                            if ($testimonials_query->current_post === 0){
+                                                                echo '<li data-bs-target="#testimonial-carousel" data-bs-slide-to="'.$counter++.'" class="active">
+                                                                        <img src="'.get_the_post_thumbnail_url().'" class="img-fluid rounded-circle avatar-image" alt="avatar">
+                                                                    </li>';
+                                                            }else{
+                                                                echo '<li data-bs-target="#testimonial-carousel" data-bs-slide-to="'.$counter++.'">
+                                                                        <img src="'.get_the_post_thumbnail_url().'" class="img-fluid rounded-circle avatar-image" alt="avatar">
+                                                                    </li>';
+                                                            }
+
+                                                        endwhile;
+                                                        wp_reset_postdata();
+                                                    endif;
+                                                ?>
+                                        </ol>
 
                                  </div>
                             </div>

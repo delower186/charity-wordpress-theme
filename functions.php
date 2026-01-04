@@ -59,18 +59,54 @@ function charity_register_styles(){
 add_action( "wp_enqueue_scripts", "charity_register_styles");
 
 
-function charity_register_scripts(){
+function charity_register_scripts() {
     // Vendor JS Files
-    wp_enqueue_script('jquery');
-    wp_enqueue_script( "charity-bootstrap", get_template_directory_uri()."/js/bootstrap.min.js", array(), "5.2.2", "all",true);
-    wp_enqueue_script( "charity-jquery-sticky", get_template_directory_uri()."/js/jquery.sticky.js", array(), "1.0.3", "all",true);
-    wp_enqueue_script( "charity-click-scroll", get_template_directory_uri()."/js/click-scroll.js", array(), "1.0.0", "all",true);
-    wp_enqueue_script( "charity-counter", get_template_directory_uri()."/js/counter.js", array(), "1.0.0", "all",true);
+    wp_enqueue_script('jquery'); // always enqueue jQuery first
+
+    wp_enqueue_script(
+        'charity-bootstrap',
+        get_template_directory_uri() . '/js/bootstrap.min.js',
+        array('jquery'), // make Bootstrap dependent on jQuery
+        '5.2.2',
+        true
+    );
+
+    wp_enqueue_script(
+        'charity-jquery-sticky',
+        get_template_directory_uri() . '/js/jquery.sticky.js',
+        array('jquery'), // jQuery dependency ensures $ is defined
+        '1.0.3',
+        true
+    );
+
+    wp_enqueue_script(
+        'charity-click-scroll',
+        get_template_directory_uri() . '/js/click-scroll.js',
+        array('jquery'), // jQuery dependency ensures $ is defined
+        '1.0.0',
+        true
+    );
+
+    wp_enqueue_script(
+        'charity-counter',
+        get_template_directory_uri() . '/js/counter.js',
+        array('jquery'), // if this depends on jQuery
+        '1.0.0',
+        true
+    );
+
     // Main JS File
-    wp_enqueue_script( "charity-main", get_template_directory_uri()."/js/main.js", array(), "1.0.0", "all",true);
+    wp_enqueue_script(
+        'charity-main',
+        get_template_directory_uri() . '/js/main.js',
+        array('jquery'), // main.js depends on jQuery
+        '1.0.0',
+        true
+    );
 }
 
-add_action( "wp_enqueue_scripts", "charity_register_scripts");
+add_action('wp_enqueue_scripts', 'charity_register_scripts');
+
 
 /**
  * Register menu

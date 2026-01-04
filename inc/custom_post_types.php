@@ -29,7 +29,10 @@ function charity_create_slider_post_type(){
 }
 
 add_action( 'init', 'charity_create_slider_post_type');
-
+/**
+ * Summary of charity_create_causes_post_type
+ * @return void
+ */
 function charity_create_causes_post_type(){   
         
     $args = array(
@@ -59,3 +62,36 @@ function charity_create_causes_post_type(){
 }
 
 add_action( 'init', 'charity_create_causes_post_type');
+/**
+ * Summary of charity_create_testimonial_post_type
+ * @return void
+ */
+function charity_create_testimonial_post_type(){   
+        
+    $args = array(
+
+        'labels' => array(
+            'name'               => 'Testimonials',
+            'singular_name'      => 'Testimonial',
+            'menu_name'          => 'Testimonials',
+            'add_new'            => "Add New Testimonial",
+            'add_new_item'       => "Add New Testimonial",
+            'new_item'           => "New Testimonial",
+            'edit_item'          => "Edit Testimonial",
+            'view_item'          => "View Testimonial",
+            'all_items'          => "All Testimonials",
+
+        ),
+
+        'public' => true,
+        'show_in_rest' => true,
+        'rewrite' => array('slug' => 'testimonial'),
+        'supports' => array('title','editor','thumbnail'),
+        'menu_icon' => 'dashicons-list-view',
+    );
+
+    register_post_type( 'testimonials', $args );
+    
+}
+
+add_action( 'init', 'charity_create_testimonial_post_type');
