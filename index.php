@@ -641,11 +641,11 @@
                                 <h2>Get in touch</h2>
 
                                 <div class="contact-image-wrap d-flex flex-wrap">
-                                    <img src="images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg" class="img-fluid avatar-image" alt="">
+                                    <img src="<?php echo get_theme_mod('contact_person_photo'); ?>" class="img-fluid avatar-image" alt="">
 
                                     <div class="d-flex flex-column justify-content-center ms-3">
-                                        <p class="mb-0">Clara Barton</p>
-                                        <p class="mb-0"><strong>HR & Office Manager</strong></p>
+                                        <p class="mb-0"><?php echo get_theme_mod('contact_person_name'); ?></p>
+                                        <p class="mb-0"><strong><?php echo get_theme_mod('contact_person_position'); ?></strong></p>
                                     </div>
                                 </div>
 
@@ -654,26 +654,26 @@
 
                                     <p class="d-flex mb-2">
                                         <i class="bi-geo-alt me-2"></i>
-                                        Formal GCE Board sandpit, Buea, Cameroon
+                                        <?php echo get_theme_mod('address'); ?>
                                     </p>
 
                                     <p class="d-flex mb-2">
                                         <i class="bi-telephone me-2"></i>
 
-                                        <a href="tel: +23780022742">
-                                            +23780022742
+                                        <a href="tel: <?php echo get_theme_mod('phone'); ?>">
+                                            <?php echo get_theme_mod('phone'); ?>
                                         </a>
                                     </p>
 
                                     <p class="d-flex">
                                         <i class="bi-envelope me-2"></i>
 
-                                        <a href="mailto:info@ascoa-cm.org">
-                                            info@ascoa-cm.org
+                                        <a href="mailto:<?php echo get_theme_mod('email'); ?>">
+                                            <?php echo get_theme_mod('email'); ?>
                                         </a>
                                     </p>
 
-                                    <a href="#" class="custom-btn btn mt-3">Get Direction</a>
+                                    <a href="<?php echo get_theme_mod('direction'); ?>" target="_blank" class="custom-btn btn mt-3">Get Direction</a>
                                 </div>
                             </div>
                         </div>

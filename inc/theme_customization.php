@@ -51,7 +51,7 @@ function charity_homepage_customizer_register( $wp_customize ) {
     /**
      * Section msg field generator
      */
-    $sections = ['address', 'email'];
+    $sections = ['address', 'email', 'phone', 'direction', 'copyright_year', 'copyright_name'];
 
     foreach($sections as $section){
         $wp_customize->add_setting( $section, array(
@@ -350,7 +350,11 @@ function charity_impact_register( $wp_customize ) {
 
 }
 add_action( 'customize_register', 'charity_impact_register' );
-
+/**
+ * Summary of charity_volunteer_register
+ * @param mixed $wp_customize
+ * @return void
+ */
 function charity_volunteer_register( $wp_customize ) {
     // Add a section
     $wp_customize->add_section( 'charity_volunteer_section', array(
@@ -411,3 +415,59 @@ function charity_volunteer_register( $wp_customize ) {
 
 }
 add_action( 'customize_register', 'charity_volunteer_register' );
+
+function charity_contact_person_register( $wp_customize ) {
+    // Add a section
+    $wp_customize->add_section( 'charity_contact_person_section', array(
+        'title'    => __( 'Contact Person Section', 'charity' ),
+        'priority' => 31,
+    ) );
+
+    /**
+     * Volunteer fields generator
+     */
+
+     $fields = ['contact_person_name','contact_person_position','contact_person_photo'];
+
+     foreach($fields as $field){
+
+        // Default type
+        $type = 'text';
+        $sanitize = 'sanitize_text_field';
+
+        switch ( $field ) {
+
+            case 'contact_person_photo':
+                $wp_customize->add_setting( $field, array(
+                    'sanitize_callback' => 'esc_url_raw',
+                ) );
+
+                $wp_customize->add_control(
+                    new WP_Customize_Image_Control(
+                        $wp_customize,
+                        $field,
+                        array(
+                            'label'   => __( 'Contact Person Photo', 'charity' ),
+                            'section' => 'charity_contact_person_section',
+                        )
+                    )
+                );
+                continue 2;
+
+        }  
+
+        $wp_customize->add_setting( $field, array(
+            'default' => '',
+            'sanitize_callback' => $sanitize,
+        ) );
+        
+        $wp_customize->add_control( $field.'_control', array(
+        'label' => ucwords( str_replace('_', ' ', $field) ),
+        'section' => 'charity_contact_person_section', // Or create a new section
+        'settings' => $field,
+        'type' => $type,
+        ) );
+    }
+
+}
+add_action( 'customize_register', 'charity_contact_person_register' );
