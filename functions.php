@@ -10,6 +10,8 @@ require_once(get_template_directory() . "/inc/custom_post_types.php");
 require_once(get_template_directory() . "/inc/custom_meta_boxes.php");
 require_once(get_template_directory() . "/inc/forms.php");
 require_once(get_template_directory() . "/inc/utilities.php");
+require_once(get_template_directory() . "/widgets/custom_search_widget.php");
+require_once(get_template_directory() . "/widgets/custom_newsletter_widget.php");
 
 function charity_theme_support(){
     // adds dynamic title tag support
@@ -118,3 +120,42 @@ function charity_register_menus() {
   ]);
 }
 add_action( 'after_setup_theme', 'charity_register_menus' );
+
+/***
+ * Register widget area
+ */
+function charity_widgets_init() {
+	
+    $widgets = ['blog-sidebar-top'];
+
+    foreach($widgets as $widget){
+        register_sidebar(
+            array(
+                'name'          => esc_html__( strtoupper($widget), 'charity' ),
+                'id'            => $widget,
+                'description'   => esc_html__( 'Add Widgets here.', 'charity' ),
+                'before_widget' => '',
+                'after_widget'  => '',
+                'before_title'  => '',
+                'after_title'   => '',
+            )
+        );
+    }
+
+    $widgets = ['blog-sidebar-bottom'];
+
+    foreach($widgets as $widget){
+        register_sidebar(
+            array(
+                'name'          => esc_html__( strtoupper($widget), 'charity' ),
+                'id'            => $widget,
+                'description'   => esc_html__( 'Add Widgets here.', 'charity' ),
+                'before_widget' => '',
+                'after_widget'  => '',
+                'before_title'  => '',
+                'after_title'   => '',
+            )
+        );
+    }
+}
+add_action( 'widgets_init', 'charity_widgets_init' );
