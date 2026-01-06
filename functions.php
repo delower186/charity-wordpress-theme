@@ -3,7 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
-
+require_once(get_template_directory() . "/inc/tgm-plugin-activation.php");
 require_once(get_template_directory() . "/inc/theme_customization.php");
 require_once(get_template_directory() . "/inc/Bootstrap_5_WP_Nav_Menu_Walker.php");
 require_once(get_template_directory() . "/inc/custom_post_types.php");
@@ -159,3 +159,86 @@ function charity_widgets_init() {
     }
 }
 add_action( 'widgets_init', 'charity_widgets_init' );
+/**
+ * Summary of charity_comment_callback
+ * @param mixed $comment
+ * @param mixed $args
+ * @param mixed $depth
+ * @return void
+ */
+function charity_comment_callback($comment, $args, $depth) {
+    $GLOBALS['comment'] = $comment;
+
+    $is_reply = $comment->comment_parent ? ' ms-5 ps-3' : ' mt-3 mb-4';
+    ?>
+    <div <?php comment_class("author-comment d-flex flex-column {$is_reply}"); ?> id="comment-<?php comment_ID(); ?>">
+        <div class="d-flex align-items-start">
+            <?php echo get_avatar($comment, 60, '', '', ['class' => 'img-fluid avatar-image me-3']); ?>
+            <div class="author-comment-info flex-grow-1">
+                <h6 class="mb-1"><?php comment_author(); ?></h6>
+                <p class="mb-0"><?php comment_text(); ?></p>
+                <div class="d-flex mt-2">
+                    <?php
+                    comment_reply_link(array_merge($args, array(
+                        'reply_text' => 'Reply',
+                        'depth'      => $depth,
+                        'max_depth'  => $args['max_depth'],
+                        'before'     => '<span class="author-comment-link">',
+                        'after'      => '</span>',
+                    )));
+                    ?>
+                </div>
+            </div>
+        </div>
+
+        <?php if ( $comment->has_children ) : ?>
+            <div class="children mt-3 ps-4">
+                <?php wp_list_comments(array(
+                    'callback' => 'charity_comment_callback',
+                    'style' => 'div',
+                    'avatar_size' => 60,
+                    'max_depth' => $args['max_depth'],
+                ), $comment->get_children()); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php
+}
+
+
+/**
+ * Summary of charity_enable_threaded_comments
+ * @return void
+ */
+function charity_enable_threaded_comments() {
+    if ( is_singular() && comments_open() && get_option('thread_comments') ) {
+        wp_enqueue_script('comment-reply');
+    }
+}
+add_action('wp_enqueue_scripts', 'charity_enable_threaded_comments');
+
+// Add Bootstrap classes to name, email, website fields
+function charity_bootstrap_comment_form_fields($fields) {
+    foreach ($fields as $key => $field) {
+        // Exclude cookies consent
+        if ($key === 'cookies') {
+            continue;
+        }
+        $fields[$key] = str_replace('<input', '<input class="form-control mb-2"', $field);
+    }
+    return $fields;
+}
+add_filter('comment_form_default_fields', 'charity_bootstrap_comment_form_fields');
+
+// Add Bootstrap class to textarea
+function charity_bootstrap_comment_form_textarea($field) {
+    return str_replace(
+        '<textarea',
+        '<textarea class="form-control mb-2"',
+        $field
+    );
+}
+add_filter('comment_form_field_comment', 'charity_bootstrap_comment_form_textarea');
+
+
+
