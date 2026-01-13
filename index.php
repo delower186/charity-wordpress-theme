@@ -1,377 +1,39 @@
-<?php get_header(); ?>
+<?php 
+/**
+ * Template Name: Blog
+ */
+get_header(); 
+?>
         <main>
 
-            <section class="hero-section hero-section-full-height">
-                <div class="container-fluid">
+            <section class="news-detail-header-section text-center" style="background-image: url('<?php echo get_current_post_page_thumbnail(); ?>');">
+                <div class="section-overlay"></div>
+
+                <div class="container">
                     <div class="row">
 
-                        <div class="col-lg-12 col-12 p-0">
-                            <div id="hero-slide" class="carousel carousel-fade slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <?php
-                                        $slider_args = [
-                                        'post_type' => 'slider', 
-                                        'posts_per_page' => -1
-                                        ];
-                                        $slider_query = new WP_Query($slider_args);
-
-                                        if ($slider_query->have_posts()):
-
-                                        while ($slider_query->have_posts()): $slider_query->the_post();
-                                    ?>
-                                    <div class="carousel-item active">
-                                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" class="carousel-image img-fluid" alt="...">
-                                        
-                                        <div class="carousel-caption d-flex flex-column justify-content-end">
-                                            <h1><?php echo get_the_title(); ?></h1>
-                                            
-                                            <p><?php echo get_the_content(); ?></p>
-                                        </div>
-                                    </div>
-                                    <?php
-                                        endwhile;
-                                        wp_reset_postdata();
-                                    endif;
-                                    ?>
-                                </div>
-
-                                <button class="carousel-control-prev" type="button" data-bs-target="#hero-slide" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-
-                                <button class="carousel-control-next" type="button" data-bs-target="#hero-slide" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
+                        <div class="col-lg-12 col-12">
+                            <h1 class="text-white"><?php echo get_current_post_page_title(); ?></h1>
                         </div>
 
                     </div>
                 </div>
             </section>
 
-
-            <section class="section-padding">
+            <section class="news-section section-padding">
                 <div class="container">
                     <div class="row">
-
-                        <div class="col-lg-10 col-12 text-center mx-auto">
-                            <h2 class="mb-5"><?php echo get_theme_mod('welcome_text'); ?></h2>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
-                            <div class="featured-block d-flex justify-content-center align-items-center">
-                                <a href="<?php echo get_theme_mod('volunteer_url'); ?>" class="d-block">
-                                    <img src=<?php echo get_template_directory_uri()."/images/icons/hands.png"; ?> class="featured-block-image img-fluid" alt="">
-
-                                    <p class="featured-block-text"><?php echo get_theme_mod('volunteer_text'); ?></p>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
-                            <div class="featured-block d-flex justify-content-center align-items-center">
-                                <a href="<?php echo get_theme_mod('caring_url'); ?>" class="d-block">
-                                    <img src=<?php echo get_template_directory_uri()."/images/icons/heart.png"; ?> class="featured-block-image img-fluid" alt="">
-
-                                    <p class="featured-block-text"><?php echo get_theme_mod('caring_text'); ?></p>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
-                            <div class="featured-block d-flex justify-content-center align-items-center">
-                                <a href="<?php echo get_theme_mod('donation_url'); ?>" class="d-block">
-                                    <img src=<?php echo get_template_directory_uri()."/images/icons/receive.png"; ?> class="featured-block-image img-fluid" alt="">
-
-                                    <p class="featured-block-text"><?php echo get_theme_mod('donation_text'); ?></p>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
-                            <div class="featured-block d-flex justify-content-center align-items-center">
-                                <a href="<?php echo get_theme_mod('scholarship_url'); ?>" class="d-block">
-                                    <img src=<?php echo get_template_directory_uri()."/images/icons/scholarship.png"; ?> class="featured-block-image img-fluid" alt="">
-
-                                    <p class="featured-block-text"><?php echo get_theme_mod('scholarship_text'); ?></p>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            <section class="section-padding section-bg" id="about">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-                            <img src="<?php echo get_theme_mod('about_image'); ?>" class="custom-text-box-image img-fluid" alt="">
-                        </div>
-
-                        <div class="col-lg-6 col-12">
-                            <div class="custom-text-box">
-                                <h2 class="mb-2"><?php echo get_theme_mod('about_heading'); ?></h2>
-
-                                <h5 class="mb-3"><?php echo get_theme_mod('about_title'); ?></h5>
-
-                                <?php echo wp_kses_post( get_theme_mod( 'about_description' ) ); ?>
-
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="custom-text-box mb-lg-0">
-                                        <h5 class="mb-3"><?php echo get_theme_mod('mission_heading'); ?></h5>
-
-                                        <?php echo wp_kses_post( get_theme_mod( 'mission_description' ) ); ?>
-
-                                        <ul class="custom-list mt-2">
-                                            <li class="custom-list-item d-flex">
-                                                <i class="bi-check custom-text-box-icon me-2"></i>
-                                                Charity For Good
-                                            </li>
-
-                                            <li class="custom-list-item d-flex">
-                                                <i class="bi-check custom-text-box-icon me-2"></i>
-                                                Non-profit
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="custom-text-box d-flex flex-wrap d-lg-block mb-lg-0">
-                                        <div class="counter-thumb"> 
-                                            <div class="d-flex">
-                                                <span class="counter-number" data-from="1" data-to="<?php echo absint( get_theme_mod('counter_funded', 0) ); ?>" data-speed="1000"></span>
-                                                <span class="counter-number-text"></span>
-                                            </div>
-
-                                            <span class="counter-text">Founded</span>
-                                        </div> 
-
-                                        <div class="counter-thumb mt-4"> 
-                                            <div class="d-flex">
-                                                <span class="counter-number" data-from="1" data-to="<?php echo absint( get_theme_mod('counter_donations', 0) ); ?>" data-speed="1000"></span>
-                                                <span class="counter-number-text"></span>
-                                            </div>
-
-                                            <span class="counter-text">Donations</span>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-
-            <section class="about-section section-padding">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-6 col-md-5 col-12">
-                            <img src="<?php echo get_theme_mod('founder_photo'); ?>" class="about-image ms-lg-auto bg-light shadow-lg img-fluid" alt="">
-                        </div>
-
-                        <div class="col-lg-5 col-md-7 col-12">
-                            <div class="custom-text-block">
-                                <h2 class="mb-0"><?php echo get_theme_mod('founder_name'); ?></h2>
-
-                                <p class="text-muted mb-lg-4 mb-md-4"><?php echo get_theme_mod('founder_designation'); ?></p>
-
-                                <?php echo wp_kses_post( get_theme_mod( 'founder_about' ) ); ?>
-
-                                <ul class="social-icon mt-4">
-                                    <?php 
-                                        if (get_theme_mod('founder_facebook_link')){
-                                            echo '<li class="social-icon-item">
-                                                    <a href="'.get_theme_mod('founder_facebook_link').'" class="social-icon-link bi-facebook"></a>
-                                                </li>';
-                                        }
-                                        if (get_theme_mod('founder_twitter_link')){
-                                            echo '<li class="social-icon-item">
-                                                    <a href="'.get_theme_mod('founder_twitter_link').'" class="social-icon-link bi-twitter"></a>
-                                                </li>';
-                                        }
-                                        if (get_theme_mod('founder_linkedin_link')){
-                                            echo '<li class="social-icon-item">
-                                                    <a href="'.get_theme_mod('founder_linkedin_link').'" class="social-icon-link bi-linkedin"></a>
-                                                </li>';
-                                        }
-                                        if (get_theme_mod('founder_instagram_link')){
-                                            echo '<li class="social-icon-item">
-                                                    <a href="'.get_theme_mod('founder_instagram_link').'" class="social-icon-link bi-instagram"></a>
-                                                </li>';
-                                        }
-                                    ?>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            <section class="cta-section section-padding section-bg">
-                <div class="container">
-                    <div class="row justify-content-center align-items-center">
-
-                        <div class="col-lg-5 col-12 ms-auto">
-                            <h2 class="mb-0"><?php echo get_theme_mod('impact_msg'); ?></h2>
-                        </div>
-
-                        <div class="col-lg-5 col-12">
-                            <a href="<?php echo get_theme_mod('impact_link_action'); ?>" class="me-4"><?php echo get_theme_mod('impact_link_text'); ?></a>
-
-                            <a href="#section_4" class="custom-btn btn smoothscroll">Become a volunteer</a>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-
-            <section class="section-padding" id="causes">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-12 col-12 text-center mb-4">
-                            <h2>Our Causes</h2>
-                        </div>
-
-                        <?php
-                            $causes_args = [
-                            'post_type' => 'causes', 
-                            'posts_per_page' => -1
-                            ];
-                            $causes_query = new WP_Query($causes_args);
-
-                            if ($causes_query->have_posts()):
-
-                            while ($causes_query->have_posts()): $causes_query->the_post();
-                        ?>
-
-                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                            <div class="custom-block-wrap">
-                                <img src="<?php echo get_the_post_thumbnail_url(); ?>" class="custom-block-image img-fluid" alt="">
-
-                                <div class="custom-block">
-                                    <div class="custom-block-body">
-                                        <h5 class="mb-3"><?php echo get_the_title(); ?></h5>
-
-                                        <p><?php echo get_the_content(); ?></p>
-
-                                        <?php
-                                            $donation_raised = get_post_meta(get_the_ID(), '_donation_raised', true);
-                                            $donation_goal = get_post_meta(get_the_ID(), '_donation_goal', true);
-
-                                            $raised = (float) $donation_raised;
-                                            $goal = (float) $donation_goal;
-
-                                            $percentage = 0;
-
-                                            if ($goal > 0) {
-                                                $percentage = ($raised / $goal) * 100;
-                                            }
-
-                                            // Optional: limit to 100%
-                                            $percentage = min(100, $percentage);
-
-                                            // Optional: round
-                                            $percentage = round($percentage, 2);
-                                        ?>
-                                        <div class="progress mt-4">
-                                            <div class="progress-bar w-75" role="progressbar" aria-valuenow="<?php echo esc_attr($percentage); ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-
-                                        <div class="d-flex align-items-center my-2">
-                                            <p class="mb-0">
-                                                <strong>Raised:</strong>
-                                                <?php
-                                                    if($donation_raised){
-                                                        echo '$'. $donation_raised;
-                                                    }else{
-                                                        echo '$'. 0;
-                                                    }
-                                                ?>
-                                            </p>
-
-                                            <p class="ms-auto mb-0">
-                                                <strong>Goal:</strong>
-                                                <?php
-                                                    if($donation_goal){
-                                                        echo '$'. $donation_goal;
-                                                    }else{
-                                                        echo '$'. 0;
-                                                    }
-                                                ?>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <a href="donate.html" class="custom-btn btn">Donate now</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <?php
-                            endwhile;
-                            wp_reset_postdata();
-                        endif;
-                        ?>
-
-                    </div>
-                </div>
-            </section>
-
-            <section class="volunteer-section section-padding" id="volunteer">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-6 col-12">
-                            <h2 class="text-white mb-4">Volunteer</h2>
-
-                            <div class="custom-form volunteer-form mb-5 mb-lg-0">
-                                <h3 class="mb-4">Become a volunteer today</h3>
-
-                                <?php echo do_shortcode('[contact-form-7 title="charity_become_volunteer_form"]'); ?>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-12">
-                            <img src="<?php echo get_theme_mod('volunteer_image'); ?>" class="volunteer-image img-fluid" alt="">
-
-                            <div class="custom-block-body text-center">
-                                <h4 class="text-white mt-lg-3 mb-lg-3"><?php echo get_theme_mod('volunteer_title'); ?></h4>
-
-                                <p class="text-white"><?php echo get_theme_mod('volunteer_msg'); ?></p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            <section class="news-section section-padding" id="news">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-12 col-12 mb-5">
-                            <h2>Latest News</h2>
-                        </div>
 
                         <div class="col-lg-7 col-12">
-                            <?php 
+                            <?php
+                                // Current page
+                                $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1; 
+                                // Blog query
                                 $blog_posts = new WP_Query(array(
-                                    'post_type'      => 'post',
-                                    'posts_per_page' => 2
+                                    'post_type'   => 'post',
+                                    'post_status' => 'publish',
+                                    'paged'       => $paged,
+                                    'posts_per_page' => get_option('posts_per_page'),
                                 ));
 
                                 if ( $blog_posts->have_posts() ) :
@@ -437,168 +99,44 @@
                                                 </div>';
 
                                     endwhile;
-                                    wp_reset_postdata();
+
+                                    $pagination = paginate_links([
+                                        'total'     => $blog_posts->max_num_pages,
+                                        'current'   => $paged,
+                                        'type'      => 'array',
+                                        'prev_text' => '&laquo;',
+                                        'next_text' => '&raquo;',
+                                    ]);
+
+                                    if ($pagination) :
+                                    ?>
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center">
+                                                <?php foreach ($pagination as $page) : ?>
+                                                    <li class="page-item <?php echo strpos($page, 'current') !== false ? 'active' : ''; ?>">
+                                                        <?php
+                                                        echo str_replace(
+                                                            ['page-numbers', 'current'],
+                                                            ['page-link', ''],
+                                                            $page
+                                                        );
+                                                        ?>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </nav>
+                                    <?php endif;
+
+                                else:
+                                    echo '<div class="news-block"><div class="news-block-title mb-2"><h4>No content found</h4></div></div>';
+
+                                wp_reset_postdata();
                                 endif;
                             ?>
                         </div>
 
-                        <div class="col-lg-4 col-12 mx-auto">
-                            <?php get_sidebar(); ?>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-
-            <section class="testimonial-section section-padding section-bg">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-8 col-12 mx-auto">
-                            <h2 class="mb-lg-3">Happy Volunteers</h2>
-                            
-                                <div id="testimonial-carousel" class="carousel carousel-fade slide" data-bs-ride="carousel">
-
-                                    <div class="carousel-inner">
-
-                                        <?php 
-                                            $testimonials_args = [
-                                            'post_type' => 'testimonials', 
-                                            'posts_per_page' => -1
-                                            ];
-                                            $testimonials_query = new WP_Query($testimonials_args);
-
-                                            if ($testimonials_query->have_posts()):
-
-                                                while ($testimonials_query->have_posts()): $testimonials_query->the_post();
-
-                                                    $full_content = get_the_content();
-
-                                                    // Remove Gutenberg comments like <!-- wp:paragraph --> etc.
-                                                    $clean_content = preg_replace( '/<!--.*?-->/', '', $full_content );
-
-                                                    // Strip remaining HTML tags
-                                                    $clean_content = wp_strip_all_tags( $clean_content );
-
-                                                    // Trim spaces
-                                                    $clean_content = trim( $clean_content );
-                                                    
-                                                    $parts = explode(' ', trim($clean_content));
-
-                                                    $first_name = array_shift($parts);      // first word
-                                                    $rest_name  = implode(' ', $parts);     // remaining words
-
-                                                    if ($testimonials_query->current_post === 0){
-                                                        echo '<div class="carousel-item active">
-                                                                <div class="carousel-caption">
-                                                                    <h4 class="carousel-title">'.get_the_title().'</h4>
-
-                                                                    <small class="carousel-name"><span class="carousel-name-title">' . esc_html($first_name) . '</span>, '.esc_html($rest_name).'</small>
-                                                                </div>
-                                                            </div>';
-                                                    }else{
-                                                        echo '<div class="carousel-item">
-                                                                <div class="carousel-caption">
-                                                                    <h4 class="carousel-title">'.get_the_title().'</h4>
-
-                                                                    <small class="carousel-name"><span class="carousel-name-title">' . esc_html($first_name) . '</span>, '.esc_html($rest_name).'</small>
-                                                                </div>
-                                                            </div>';
-                                                    }
-                                                endwhile;
-                                                wp_reset_postdata();
-                                            endif;
-                                        ?>
-
-                                          <ol class="carousel-indicators">
-                                                <?php 
-                                                    if ($testimonials_query->have_posts()):
-
-                                                        $counter = 0;
-
-                                                        while ($testimonials_query->have_posts()): $testimonials_query->the_post();
-
-                                                            if ($testimonials_query->current_post === 0){
-                                                                echo '<li data-bs-target="#testimonial-carousel" data-bs-slide-to="'.$counter++.'" class="active">
-                                                                        <img src="'.get_the_post_thumbnail_url().'" class="img-fluid rounded-circle avatar-image" alt="avatar">
-                                                                    </li>';
-                                                            }else{
-                                                                echo '<li data-bs-target="#testimonial-carousel" data-bs-slide-to="'.$counter++.'">
-                                                                        <img src="'.get_the_post_thumbnail_url().'" class="img-fluid rounded-circle avatar-image" alt="avatar">
-                                                                    </li>';
-                                                            }
-
-                                                        endwhile;
-                                                        wp_reset_postdata();
-                                                    endif;
-                                                ?>
-                                        </ol>
-
-                                 </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-
-            <section class="contact-section section-padding" id="contact">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-4 col-12 ms-auto mb-5 mb-lg-0">
-                            <div class="contact-info-wrap">
-                                <h2>Get in touch</h2>
-
-                                <div class="contact-image-wrap d-flex flex-wrap">
-                                    <img src="<?php echo get_theme_mod('contact_person_photo'); ?>" class="img-fluid avatar-image" alt="">
-
-                                    <div class="d-flex flex-column justify-content-center ms-3">
-                                        <p class="mb-0"><?php echo get_theme_mod('contact_person_name'); ?></p>
-                                        <p class="mb-0"><strong><?php echo get_theme_mod('contact_person_position'); ?></strong></p>
-                                    </div>
-                                </div>
-
-                                <div class="contact-info">
-                                    <h5 class="mb-3">Contact Infomation</h5>
-
-                                    <p class="d-flex mb-2">
-                                        <i class="bi-geo-alt me-2"></i>
-                                        <?php echo get_theme_mod('address'); ?>
-                                    </p>
-
-                                    <p class="d-flex mb-2">
-                                        <i class="bi-telephone me-2"></i>
-
-                                        <a href="tel: <?php echo get_theme_mod('phone'); ?>">
-                                            <?php echo get_theme_mod('phone'); ?>
-                                        </a>
-                                    </p>
-
-                                    <p class="d-flex">
-                                        <i class="bi-envelope me-2"></i>
-
-                                        <a href="mailto:<?php echo get_theme_mod('email'); ?>">
-                                            <?php echo get_theme_mod('email'); ?>
-                                        </a>
-                                    </p>
-
-                                    <a href="<?php echo get_theme_mod('direction'); ?>" target="_blank" class="custom-btn btn mt-3">Get Direction</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-5 col-12 mx-auto">
-                            <div class="custom-form contact-form">
-                                <h2>Contact form</h2>
-
-                                <p class="mb-4">Or, you can just send an email:
-                                    <a href="#">info@ascoa-cm.org</a>
-                                </p>
-                                <?php echo do_shortcode('[contact-form-7 title="charity_contact_form"]'); ?>
-                            </div>
+                        <div class="col-lg-4 col-12 mx-auto mt-4 mt-lg-0">
+                        <?php get_sidebar(); ?>
                         </div>
 
                     </div>

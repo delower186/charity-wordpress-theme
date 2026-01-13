@@ -3,6 +3,16 @@
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
+// Add theme support for Elementor
+add_theme_support('elementor');
+add_theme_support('align-wide');
+
+// Elementor Plugin Enable for Custom Post Type Causes
+add_post_type_support('causes', 'editor');
+add_post_type_support('causes', 'elementor');
+
+
+
 require_once(get_template_directory() . "/inc/tgm-plugin-activation.php");
 require_once(get_template_directory() . "/inc/theme_customization.php");
 require_once(get_template_directory() . "/inc/Bootstrap_5_WP_Nav_Menu_Walker.php");

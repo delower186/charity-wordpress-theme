@@ -15,6 +15,11 @@ function charity_register_required_plugins() {
             'slug'     => 'ultimate-social-media-icons',
             'required' => true,
         ),
+        array(
+            'name'     => 'Elementor Website Builder – More Than Just a Page Builder',
+            'slug'     => 'elementor',
+            'required' => true,
+        ),
     );
 
     $config = array(

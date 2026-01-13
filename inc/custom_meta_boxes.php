@@ -23,6 +23,7 @@ function charity_causes_meta_box_callback($post) {
     // Retrieve existing value
     $donation_goal = get_post_meta($post->ID, '_donation_goal', true);
     $donation_raised = get_post_meta($post->ID, '_donation_raised', true);
+    $donation_link = get_post_meta($post->ID, '_donation_link', true);
 
 
     ?>
@@ -32,7 +33,11 @@ function charity_causes_meta_box_callback($post) {
     </p>
     <p>
         <label for="donation_raised">Donation Raised:</label><br>
-        <input type="disabled" name="donation_raised" id="donation_raised" value="<?php echo esc_attr($donation_raised) ? '':0; ?>" disabled>
+        <input type="number" name="donation_raised" id="donation_raised" value="<?php echo $donation_raised ? esc_attr($donation_raised) : 0; ?>">
+    </p>
+    <p>
+        <label for="donation_link">Donation Link:</label><br>
+        <input type="text" name="donation_link" id="donation_link" value="<?php echo esc_attr($donation_link); ?>">
     </p>
     <?php
 }
@@ -56,6 +61,9 @@ function charity_save_causes_meta_box($post_id) {
     }
     if (isset($_POST['donation_raised'])) {
         update_post_meta($post_id, '_donation_raised', sanitize_text_field($_POST['donation_raised']));
+    }
+    if (isset($_POST['donation_link'])) {
+        update_post_meta($post_id, '_donation_link', sanitize_text_field($_POST['donation_link']));
     }
 }
 add_action('save_post', 'charity_save_causes_meta_box');
